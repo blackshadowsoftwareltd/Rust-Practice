@@ -1,25 +1,29 @@
 #![deny(clippy::all)]
 
 fn main() {
-    // let variable can not be changed after initialization. it's immutable. kind of constant
-    let first_name: &str = "Remon";
-    let last_name: &str = "Ahammad";
-    let age = 23i32; // it is same as let age: i32 = 23;
-    println!("{first_name} {last_name} is {age} years old");
+    let x: i32 = 5;
+    let y: i32 = 10;
+    let z: u32 = 2;
 
-    //? add mut keyword to make it mutable. ex: let mut variable_name: &str = "value";
-    let mut full_name: &str = "";
-    let mut age: u8 = 0; // u8 is unsigned 8 bit integer. it can't be negative
-    let mut male: bool = false;
-    {
-        // {} is a separated block bind.
-        print!("{full_name} {age} {male}");
-    }
-    full_name = "Remon Ahammad";
-    age = 23;
-    male = true;
-    println!("{full_name} is {age} years old & Male? {male}");
+    // Integer addition
+    println!("1 + 2 = {}", 1i32 + 2i32 + x + y); // u8 + i32 not supported
 
-    let height: f32 = 5.9;
-    println!("Height is {height} Feet");
+    // Integer subtraction
+    println!("1 - 2 = {}", 1 - 2i32); // u8 - i32 not supported
+
+    // Short-circuiting boolean logic
+    let a = false;
+    let b = true;
+    println!("true AND false is {}", a && b);
+    println!("true OR false is {}", a || b);
+    println!("NOT true is {}", !b);
+
+    println!("1 << 5 is {}", z << 5);
+    println!("0x80 >> 2 is 0 x {:x}", 0x80u32 >> z);
+
+    // Use underscores to improve readability!
+    println!("One million is written as {}", 1_000_000u32);
+
+    println!("{}", y / x);
+    println!("{}", (y * y + 3) % x)
 }
