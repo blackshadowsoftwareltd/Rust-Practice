@@ -1,1 +1,8 @@
-target
+# Ignore compiled binary files
+target/
+
+# Ignore Cargo.lock file
+Cargo.lock
+
+# Ignore editor backup files
+*~
