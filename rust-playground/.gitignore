@@ -1,6 +1,7 @@
 # Ignore compiled binary files
 target/
-
+# Ignore compiled files
+*.rs.bk
 # Ignore Cargo.lock file
 Cargo.lock
 
