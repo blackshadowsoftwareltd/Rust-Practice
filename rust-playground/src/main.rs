@@ -6,7 +6,7 @@ fn main() {
     print!("Hello, world!");
     println!();
 
-    let name = "Remon";
+    let name = "Remon Ahammad";
     let age = 23;
     //? Here, {} is a placeholder which is replaced by the value of the variable after the comma. That's why we get 31 as output instead of {}
     println!("{}", age);
