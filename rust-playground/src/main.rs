@@ -1,28 +1,25 @@
 #![deny(clippy::all)]
 
 fn main() {
-    //? print example of rust lang
-    println!("Hellow world");
-    print!("Hello, world!");
-    println!();
+    // let variable can not be changed after initialization. it's immutable. kind of constant
+    let first_name: &str = "Remon";
+    let last_name: &str = "Ahammad";
+    let age = 23i32; // it is same as let age: i32 = 23;
+    println!("{first_name} {last_name} is {age} years old");
 
-    let name = "Remon Ahammad";
-    let age = 23;
-    //? Here, {} is a placeholder which is replaced by the value of the variable after the comma. That's why we get 31 as output instead of {}
-    println!("{}", age);
+    //? add mut keyword to make it mutable. ex: let mut variable_name: &str = "value";
+    let mut full_name: &str = "";
+    let mut age: u8 = 0; // u8 is unsigned 8 bit integer. it can't be negative
+    let mut male: bool = false;
+    {
+        // {} is a separated block bind.
+        print!("{full_name} {age} {male}");
+    }
+    full_name = "Remon Ahammad";
+    age = 23;
+    male = true;
+    println!("{full_name} is {age} years old & Male? {male}");
 
-    println!("Age : {}", age); // {} is a placeholder
-
-    //? Print multiple variable
-    println!("Name : {}, Age : {}", name, age);
-
-    //? specify the numbering for placeholders to print variables in different order.
-    //? name is 0 index & age is 1 index
-    println!("Age : {1}, Name : {0}", name, age);
-
-    //?also use the variable names directly inside the placeholder.
-    println!("Name : {name}, Age : {age}");
-
-    //? Print Newline
-    print!("Rust is fun!\nI love Rust programming.");
+    let height: f32 = 5.9;
+    println!("Height is {height} Feet");
 }
