@@ -3,9 +3,11 @@
 fn main() {
     let mut name = String::from("Remon");
     println!("{}", name);
-    name = take_ownership_and_give_back(name);
+    take_ownership_and_give_back(&mut name);
     println!("{}", name);
 }
-fn take_ownership_and_give_back(n: String) -> String {
-    n + "Ahammad"
+// ? reference (&) not give ownership
+fn take_ownership_and_give_back(n: &mut String) {
+    println!("{}", n.len());
+    n.push_str(" Ahammad") // push_str concat with another String
 }
