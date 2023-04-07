@@ -1,13 +1,12 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let name = "Remon".to_string();
-    println!("Value : {}", name);
-    greet(&name);
-    println!("Value : {}", name);
-    // ! Ownership does not work there cause used "&". 
-    // ! "&" made the reference to the name variable. 
-    // ! That means a copy of the variable is passed to the method, not Ownership.
+    let first_name = "Remon".to_string();
+    let last_name = &first_name;
+    println!("Value : {}, {}", first_name, last_name);
+    greet(&first_name); // ! reference of the name
+    greet(last_name); // ! already type of refered variable. so no need "&" here
+    println!("Value : {}, {}", first_name, last_name);
 }
 fn greet(name: &String) {
     println!("Name {}", name);
