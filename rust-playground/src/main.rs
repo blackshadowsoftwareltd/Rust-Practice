@@ -1,13 +1,15 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let first_name = "Remon".to_string();
-    let last_name = &first_name;
-    println!("Value : {}, {}", first_name, last_name);
-    greet(&first_name); // ! reference of the name
-    greet(last_name); // ! already type of refered variable. so no need "&" here
-    println!("Value : {}, {}", first_name, last_name);
+    let mut name = "Hellow".to_string();
+    println!("value : {}", name);
+    clear_txt(&mut name); // ! mutable reference has the ability to read & write permission of the variable.
+    println!("value : {}", name);
 }
-fn greet(name: &String) {
-    println!("Name {}", name);
+fn clear_txt(name: &mut String) {
+    name.clear(); // ! it will be clear the name variable. 
 }
+
+// outputs :
+// value : Hellow
+// value :
