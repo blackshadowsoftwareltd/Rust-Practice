@@ -9,7 +9,7 @@ fn main() {
 
     //? so we can create bloc of code for each code
     {
-        let r1 = &s;
+        let r1 = &mut s;
         println!("{}", r1)
     }
     {
