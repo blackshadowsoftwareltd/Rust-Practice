@@ -1,15 +1,30 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let mut name = "Hellow".to_string();
-    println!("value : {}", name);
-    clear_txt(&mut name); // ! mutable reference has the ability to read & write permission of the variable.
-    println!("value : {}", name);
-}
-fn clear_txt(name: &mut String) {
-    name.clear(); // ! it will be clear the name variable. 
-}
+    // ! store data. kind of ternary operator
+    let name = if 10 == 100 {
+        String::from("Remon")
+    } else {
+        String::from("Ahammad")
+    };
+    println!("The name is {}", name);
 
-// outputs :
-// value : Hellow
-// value :
+    // ! stor data when loop is iterating
+    let list = [1, 2, 3, 4, 5];
+    let mut count = 0;
+    let result = loop {
+        if list.len() == count {
+            break 0;
+        }
+        if 10 == list[count] {
+            break list[count];
+        }
+        count += 1;
+    };
+    let found = if result == 0 {
+        "Not Found".to_string()
+    } else {
+        "Found".to_string()
+    };
+    println!("result : {}", found);
+}
