@@ -1,13 +1,20 @@
 #![deny(clippy::all)]
 
 fn main() {
-    process_name("Remon", print_name); // ? passed a function in the function argument
-}
-// ? pass a function as a parameter in a function
-fn process_name(name: &str, callback: fn(&str) -> ()) {
-    callback(name)
+    let x = 50;
+    let y = 20;
+    println!("sum of {} + {} = {}", x, y, calculate(x, y, sum));
+    println!("Subtract of {} + {} = {}", x, y, calculate(x, y, subtract));
 }
 
-fn print_name(name: &str) {
-    println!("Name : {}", name)
+fn calculate(x: u8, y: u8, callback: fn(x: u8, y: u8) -> u8) -> u8 {
+    callback(x, y)
+}
+
+fn sum(x: u8, y: u8) -> u8 {
+    x + y
+}
+
+fn subtract(x: u8, y: u8) -> u8 {
+    x - y
 }
