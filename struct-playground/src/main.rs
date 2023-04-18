@@ -1,43 +1,26 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let point = Point(0.0, 1.0, 2.0);
-    point.discribe();
-
-    let mut new_point = point.twice();
-    new_point.discribe();
-
-    new_point.twice_muted();
-    new_point.discribe();
-
-    // ? reset call by Point::reset();
-    new_point = Point::reset(); // ? non associated function
-    new_point.discribe();
+    let p1 = Point {
+        x: 10,
+        y: 20,
+        z: 30,
+    };
+    let p2 = Point {
+        x: 20,
+        y: 30,
+        z: 40,
+    };
+    println!("Is Equal p1 & p2 {}", p1.equality(&p2))
 }
-struct Point(f32, f32, f32); // ? tuple.
 
+struct Point {
+    x: u64,
+    y: u64,
+    z: u64,
+}
 impl Point {
-    fn discribe(&self) {
-        println!("Point {}, {}, {}", self.0, self.1, self.2);
-    }
-
-    fn twice(&self) -> Point {
-        Point(self.0 * 2.0, self.1 * 2.0, self.2 * 2.0)
-    }
-
-    fn twice_muted(&mut self) {
-        self.0 *= 2.0;
-        self.1 *= 2.0;
-        self.2 *= 2.0;
-    }
-
-    // ? non associated function
-    fn reset() -> Point {
-        Point(0.0, 0.0, 0.0)
+    fn equality(&self, other: &Point) -> bool {
+        self.x == other.x && self.y == other.y && self.z == other.z
     }
 }
-// * print ->
-// * Point 0, 1, 2
-// * Point 0, 2, 4
-// * Point 0, 4, 8
-// * Point 0, 0, 0
