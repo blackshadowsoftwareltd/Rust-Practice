@@ -1,23 +1,27 @@
 #![deny(clippy::all)]
 
 fn main() {
-    println!(
-        "All Animals is {:?}, {:?}, {:?}",
-        Animals::Dog,
-        Animals::Cat,
-        Animals::Rabbit
-    );
-    let cat: Animals = Animals::Cat;
-    match cat {
-        Animals::Dog => println!("{:?}", Animals::Dog),
-        Animals::Cat => println!("{:?}", Animals::Cat),
-        _ => println!("{:?}", Animals::Rabbit),
+    let circle = Shapes::Circle {
+        radius: 80,
+        center: (10, 20),
+    };
+    if let Shapes::Circle { radius, center } = circle {
+        println!(
+            "Circle Radius {:?}, Center {:?} & {:?}",
+            radius, center.0, center.1
+        );
     }
+    let rect = Shapes::Rectanble {
+        width: 50,
+        height: 40,
+    };
+    if let Shapes::Rectanble { width, height } = rect {
+        println!("Ractangle width{:?}, height {:?}", width, height);
+    };
 }
 
-#[derive(Debug)] //? to print enum directly like println!("{:?}",Animals::Cat);
-enum Animals {
-    Dog,
-    Cat,
-    Rabbit,
+#[derive(Debug)] //? to print enum directly like println!("{:?}",Animals::Cat);S
+enum Shapes {
+    Circle { radius: i64, center: (i64, i64) },
+    Rectanble { width: i64, height: i64 },
 }
