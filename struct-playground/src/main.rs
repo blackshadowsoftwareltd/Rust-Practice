@@ -1,26 +1,23 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let p1 = Point {
-        x: 10,
-        y: 20,
-        z: 30,
-    };
-    let p2 = Point {
-        x: 20,
-        y: 30,
-        z: 40,
-    };
-    println!("Is Equal p1 & p2 {}", p1.equality(&p2))
+    println!(
+        "All Animals is {:?}, {:?}, {:?}",
+        Animals::Dog,
+        Animals::Cat,
+        Animals::Rabbit
+    );
+    let cat: Animals = Animals::Cat;
+    match cat {
+        Animals::Dog => println!("{:?}", Animals::Dog),
+        Animals::Cat => println!("{:?}", Animals::Cat),
+        _ => println!("{:?}", Animals::Rabbit),
+    }
 }
 
-struct Point {
-    x: u64,
-    y: u64,
-    z: u64,
-}
-impl Point {
-    fn equality(&self, other: &Point) -> bool {
-        self.x == other.x && self.y == other.y && self.z == other.z
-    }
+#[derive(Debug)] //? to print enum directly like println!("{:?}",Animals::Cat);
+enum Animals {
+    Dog,
+    Cat,
+    Rabbit,
 }
