@@ -1,20 +1,9 @@
 #![deny(clippy::all)]
-
+use std::error::Error;
 fn main() {
-    let x = 50;
-    let y = 20;
-    println!("sum of {} + {} = {}", x, y, calculate(x, y, sum));
-    println!("Subtract of {} + {} = {}", x, y, calculate(x, y, subtract));
-}
+    let result: Result<String, Box<dyn Error>> = Ok("OK".to_string());
+    println!("Resutl {:?}", result);
 
-fn calculate(x: u8, y: u8, callback: fn(x: u8, y: u8) -> u8) -> u8 {
-    callback(x, y)
-}
-
-fn sum(x: u8, y: u8) -> u8 {
-    x + y
-}
-
-fn subtract(x: u8, y: u8) -> u8 {
-    x - y
+    let result: Result<String, Box<dyn Error>> = Err(Box::new(std::fmt::Error));
+    println!("Resutl {:?}", result);
 }
