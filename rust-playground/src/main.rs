@@ -1,9 +1,14 @@
 #![deny(clippy::all)]
-use std::error::Error;
 fn main() {
-    let result: Result<String, Box<dyn Error>> = Ok("OK".to_string());
-    println!("Resutl {:?}", result);
+    let result: Result<String, ()> = Ok("Success".to_string());
+    match result {
+        Ok(v) => println!("Ok {}", v),
+        Err(_) => println!("Void Error"),
+    }
 
-    let result: Result<String, Box<dyn Error>> = Err(Box::new(std::fmt::Error));
-    println!("Resutl {:?}", result);
+    let result: Result<String, ()> = Err(());
+    match result {
+        Ok(v) => println!("Ok {}", v),
+        Err(_) => println!("Void Error"),
+    }
 }
