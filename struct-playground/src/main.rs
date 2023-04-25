@@ -1,36 +1,26 @@
 #![deny(clippy::all)]
-use std::f32::consts::PI;
 
 fn main() {
-    let circle = Shapes::Circle(10.0, 20.0, 30.0);
-
-    let rect = Shapes::Rectangle(
-        20.0,
-        40.0,
-        Size {
-            width: 15.0,
-            height: 25.0,
-        },
-    );
-    println!("Area of Circle {}", circle.area());
-    println!("Area of Rectangle {}", rect.area());
+    let person = Person {
+        first_name: "Remon".to_string(),
+        last_name: "Ahammad".to_string(),
+    };
+    println!("Person : {:?}", person.full_name()); // Person : "Remon Ahammad"
 }
-impl Shapes {
-    fn area(&self) -> f32 {
-        match self {
-            Shapes::Rectangle(_, _, Size { width, height }) => width * height,
-            Shapes::Circle(_, _, radius) => PI * radius * radius,
-        }
+
+#[derive(Debug)]
+struct Person {
+    first_name: String,
+    last_name: String,
+}
+
+trait HasName {
+    // ? trait is kind of mixin in dart
+    fn full_name(&self) -> String;
+}
+
+impl HasName for Person {
+    fn full_name(&self) -> String {
+        format!("{} {}", self.first_name, self.last_name)
     }
-}
-
-#[derive(Debug)] //? to print enum directly like println!("{:?}",Animals::Cat);
-enum Shapes {
-    Circle(f32, f32, f32),
-    Rectangle(f32, f32, Size),
-}
-#[derive(Debug)] //? to print enum property directly.
-struct Size {
-    width: f32,
-    height: f32,
 }
