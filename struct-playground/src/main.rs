@@ -1,14 +1,22 @@
 #![deny(clippy::all)]
 
+use std::fmt;
+
 fn main() {
     let person = Person::new("Remon Ahammad");
-    println!(
-        "First Name : {}, Last Name : {}",
-        person.first_name, person.last_name
-    ); // First Name : Remon, Last Name : Ahammad
+    println!("{}", person); // First Name : Remon, Last Name : Ahammad
 }
 
-#[derive(Debug)]
+impl fmt::Display for Person {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "First Name : {}, Last Name : {}",
+            self.first_name, self.last_name
+        )
+    }
+}
+
 struct Person {
     first_name: String,
     last_name: String,
