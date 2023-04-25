@@ -1,11 +1,11 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let person = Person {
-        first_name: "Remon".to_string(),
-        last_name: "Ahammad".to_string(),
-    };
-    println!("Person : {:?}", person.full_name()); // Person : "Remon Ahammad"
+    let person = Person::new("Remon Ahammad");
+    println!(
+        "First Name : {}, Last Name : {}",
+        person.first_name, person.last_name
+    ); // First Name : Remon, Last Name : Ahammad
 }
 
 #[derive(Debug)]
@@ -14,13 +14,15 @@ struct Person {
     last_name: String,
 }
 
-trait HasName {
-    // ? trait is kind of mixin in dart
-    fn full_name(&self) -> String;
+trait PersonInit {
+    fn new(name: &str) -> Self;
 }
-
-impl HasName for Person {
-    fn full_name(&self) -> String {
-        format!("{} {}", self.first_name, self.last_name)
+impl PersonInit for Person {
+    fn new(name: &str) -> Self {
+        let part: Vec<&str> = name.split(' ').collect();
+        Person {
+            first_name: part[0].to_string(),
+            last_name: part[1].to_string(),
+        }
     }
 }
