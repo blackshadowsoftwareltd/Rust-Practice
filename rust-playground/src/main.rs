@@ -1,19 +1,11 @@
 #![deny(clippy::all)]
-
 fn main() {
-    let five = Some(5);
+    let mut count: Box<i8> = Box::new(20);
+    println!("count : {}", *count);
 
-    let six_option = sum_one(five);
-    let six = six_option.unwrap_or(0);
-    println!("{}", six); // 6
+    let twice = *count * 2;
+    println!("twice : {}", twice);
 
-    let none_option = sum_one(None);
-    let none = none_option.unwrap_or(0);
-    println!("{}", none) // 0
-}
-fn sum_one(x: Option<i32>) -> Option<i32> {
-    match x {
-        None => None,
-        Some(_) => x.map(|v| v + 1),
-    }
+    *count *= 2;
+    println!("twice on point of variable : {}", *count);
 }
