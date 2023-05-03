@@ -1,39 +1,28 @@
 #![deny(clippy::all)]
-
-use std::ops::Deref;
+use std::cell::Cell;
 fn main() {
-    let count: CustomBox<i8> = CustomBox::new(10);
-    println!("Custom Box count : {}", *count); // ! err: deref error. to avoid this error we need to imple deref struct for CustomBox<T> -> deref()
+    let person = Person::new("Remon Ahammad".to_string(), 23);
+    println!("name : {}", person.name); // (no need) for avoiding unused variable
+    println!("new person : {:?}", person); // ? new person : Person { name: "Remon Ahammad", age: Cell { value: 23 } }
 
-    let actual_value: &i8 = count.deref(); // ? getting value without pointer (with reference) using deref()
-    println!("Actual value : {}", actual_value);
-
-    let other: i8 = *(count.deref()); // ? *count == *(count.deref()) similar things
-    println!("Similar to *count == *(count.deref()) : {}", other);
-
-    // ? implicit dereference. rust understand we need i8 (actual count data is CustomBox<i8>)
-    print_value(&count); // ? passing reference of value to a function by using &value
+    println!("person with incremented age : {:?}", person.age_increment()); // ?person with incremented age : Person { name: "Remon Ahammad", age: Cell { value: 24 } }
 }
 
-struct CustomBox<T> {
-    value: T,
+#[derive(Debug)]
+struct Person {
+    name: String,
+    age: Cell<u8>, // ? The Cell will give support for the mutability of this variable where everything is immutable
 }
 
-impl<T> CustomBox<T> {
-    fn new(value: T) -> Self {
-        CustomBox { value }
+impl Person {
+    fn new(name: String, age: u8) -> Self {
+        Person {
+            name,
+            age: Cell::new(age), // ? create a Cell variable
+        }
     }
-}
-
-// ? Deref will help to count value directly by pointer
-// ? Deref == Dereference
-impl<T> Deref for CustomBox<T> {
-    type Target = T;
-    fn deref(&self) -> &Self::Target {
-        &self.value
+    fn age_increment(&self) -> &Self {
+        self.age.set(self.age.get() + 1);
+        self
     }
-}
-
-fn print_value(value: &i8) {
-    println!("print value : {}", value);
 }
