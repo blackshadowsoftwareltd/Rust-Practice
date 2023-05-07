@@ -1,28 +1,18 @@
 #![deny(clippy::all)]
-use std::cell::Cell;
+
 fn main() {
-    let person = Person::new("Remon Ahammad".to_string(), 23);
-    println!("name : {}", person.name); // (no need) for avoiding unused variable
-    println!("new person : {:?}", person); // ? new person : Person { name: "Remon Ahammad", age: Cell { value: 23 } }
+    let p1 = Point { x: 1, y: 2 };
+    let p2 = Point { x: 1, y: 2 };
 
-    println!("person with incremented age : {:?}", person.age_increment()); // ?person with incremented age : Person { name: "Remon Ahammad", age: Cell { value: 24 } }
+    println!("{}", p1 == p2);
 }
 
-#[derive(Debug)]
-struct Person {
-    name: String,
-    age: Cell<u8>, // ? The Cell will give support for the mutability of this variable where everything is immutable
+struct Point<T> {
+    x: T,
+    y: T,
 }
-
-impl Person {
-    fn new(name: String, age: u8) -> Self {
-        Person {
-            name,
-            age: Cell::new(age), // ? create a Cell variable
-        }
-    }
-    fn age_increment(&self) -> &Self {
-        self.age.set(self.age.get() + 1);
-        self
+impl<T: PartialEq> PartialEq for Point<T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.x == other.x && self.y == other.y
     }
 }
