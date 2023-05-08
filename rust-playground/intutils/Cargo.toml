@@ -1,11 +1,8 @@
 [package]
-name = "rust-playground"
+name = "intutils"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
-# import path of mod file
-intutils = { path = "intutils"}

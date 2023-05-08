@@ -43,3 +43,12 @@ cargo install cargo-watch
 ```
 cargo-watch -qc -x run -x clippy
 ```
+
+=============================================
+
+#### create package (intutils is a package name)
+
+````
+cargo new --lib intutils
+```
+````
