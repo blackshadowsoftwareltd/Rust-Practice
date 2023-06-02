@@ -1,0 +1,27 @@
+# Miscellaneous
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+
+# Symbolication related
+
+# Obfuscation related
+
+# Android Studio will place build artifacts here
+asynchronous-playground/target/
+collection-playground/target/
+crates-package-modules-playground/target/
+crates-package-modules-playground/workspace/target/
+file-playground/target/
+rust-playground/target/
+struct-playground/target/
