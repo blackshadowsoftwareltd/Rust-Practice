@@ -5,3 +5,10 @@ version = 3
 [[package]]
 name = "crates-package-modules-playground"
 version = "0.1.0"
+dependencies = [
+ "workspace",
+]
+
+[[package]]
+name = "workspace"
+version = "0.1.0"
