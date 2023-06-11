@@ -1,19 +1,11 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let mut array: [i32; 5] = [1, 2, 3, 4, 5];
-    let mut slice: &[i32] = &array;
-    println!("{:?}", slice); // [1, 2, 3, 4, 5]
+    let mut _str: &str = "World.";
+    let mut _string: String = "Hello! ".to_string();
+    _string.push_str(_str); // let mut s = String::from("foo"); s.push_str("bar"); :> "foobar"
+    println!("{}", _string);
 
-    println!("{:?}", &slice[0..slice.len()]); // [1, 2, 3, 4, 5]
-    println!("{:?}", &slice[..slice.len()]); // [1, 2, 3, 4, 5]
-    println!("{:?}", &slice[2..slice.len()]); // [3, 4, 5]
-    println!("{:?}", &slice[2..]); // [3, 4, 5]
-
-    slice = &slice[2..];
-    println!("{:?}", slice);
-
-    array = [1, 2, 3, 4, 5];
-    slice = &array[..]; // To easily create a slice of the full array, we can therefore use &a[..].
-    println!("{:?}", slice); // [1, 2, 3, 4, 5]
+    _str = &_string[..]; // You can borrow &str slices from String via & and optionally range selection.
+    println!("{}", _str);
 }
