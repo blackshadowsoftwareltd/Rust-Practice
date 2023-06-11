@@ -1,11 +1,19 @@
 #![deny(clippy::all)]
 
-fn main() {
-    let mut _str: &str = "World.";
-    let mut _string: String = "Hello! ".to_string();
-    _string.push_str(_str); // let mut s = String::from("foo"); s.push_str("bar"); :> "foobar"
-    println!("{}", _string);
+use rand::prelude::*;
 
-    _str = &_string[..]; // You can borrow &str slices from String via & and optionally range selection.
-    println!("{}", _str);
+fn main() {
+    let mut random_number = random::<u32>();
+    println!("{:?}", random_number);
+
+    let mut rng: ThreadRng = rand::thread_rng();
+    random_number = rng.gen();
+    println!("{:?}", random_number);
+    random_number = rng.gen();
+    println!("{:?}", random_number);
+
+    let mut numbers: Vec<i32> = (0..100).collect();
+    println!("{:?}", numbers);
+    numbers.shuffle(&mut rng);
+    println!("{:?}", numbers);
 }
