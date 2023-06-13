@@ -1,15 +1,13 @@
 #![deny(clippy::all)]
 
 fn main() {
-    println!("coin toss: {}", pick_one("heads", "tails"));
-    println!("cash prize: {}", pick_one(500, 100));
-}
-fn pick_one<T>(x: T, y: T) -> T {
-    let id: u32 = std::process::id(); //? The std::process::id() function in Rust returns the identifier (ID) of the current process. It is a simple and efficient way to obtain the unique identifier for the running process.
-    println!("process ID: {}", id);
-    if id % 2 == 0 {
-        x
-    } else {
-        y
-    }
+    let x: i32 = 10;
+    let ref_x: &i32 = &x;
+    println!("x : {}", x);
+    println!("ref x : {}", ref_x);
+
+    let mut y: i32 = 10;
+    let ref_y: &mut i32 = &mut y;
+    // println!("y : {:?}", y); //? cannot borrow `y` as immutable because it is also borrowed as mutable
+    println!("y_ref : {}", ref_y);
 }
