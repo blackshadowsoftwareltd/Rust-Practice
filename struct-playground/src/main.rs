@@ -1,40 +1,15 @@
+#![deny(clippy::all)]
+
 fn main() {
-    let mut rect: Rectangle = Rectangle::new(10, 5);
-    println!("old area : {:?}", rect.area());
-
-    rect.update_width_height_with_ref(20, 10); //? wither ref
-    println!("updated with ref : {:?}", rect.area());
-
-    rect = rect.update_width_height(30, 15); //? without ref
-    println!("updated without ref : {:?}", rect.area());
-
-    rect.inc_width(5);
-    println!("new area : {:?}", rect.area());
+    println!("coin toss: {}", pick_one("heads", "tails"));
+    println!("cash prize: {}", pick_one(500, 100));
 }
-
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-impl Rectangle {
-    fn new(width: u32, height: u32) -> Rectangle {
-        Rectangle { width, height }
-    }
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-    fn update_width_height_with_ref(&mut self, w: u32, h: u32) {
-        self.width = w;
-        self.height = h;
-        // ? no need return if self is mut ref
-    }
-    fn update_width_height(mut self, w: u32, h: u32) -> Rectangle {
-        self.width = w;
-        self.height = h;
-        self
-    }
-    fn inc_width(&mut self, delta: u32) {
-        self.width += delta
+fn pick_one<T>(x: T, y: T) -> T {
+    let id: u32 = std::process::id(); //? The std::process::id() function in Rust returns the identifier (ID) of the current process. It is a simple and efficient way to obtain the unique identifier for the running process.
+    println!("process ID: {}", id);
+    if id % 2 == 0 {
+        x
+    } else {
+        y
     }
 }
