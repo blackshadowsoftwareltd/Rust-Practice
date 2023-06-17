@@ -1,13 +1,37 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let x: i32 = 10;
-    let ref_x: &i32 = &x;
-    println!("x : {}", x);
-    println!("ref x : {}", ref_x);
+    let mut person1;
+    person1 = Person::new();
+    println!("{:?}", person1);
+    person1.update("Remon".to_string(), 23);
+    println!("{:?}", person1);
 
-    let mut y: i32 = 10;
-    let ref_y: &mut i32 = &mut y;
-    // println!("y : {:?}", y); //? cannot borrow `y` as immutable because it is also borrowed as mutable
-    println!("y_ref : {}", ref_y);
+    let mut vector: Vec<Person> = vec![person1.clone()];
+    person1.reset();
+    println!("{:?}", person1);
+    vector.push(person1);
+    println!("{:?}", vector);
+}
+
+impl Person {
+    fn new() -> Self {
+        Person {
+            name: "Your Name".to_string(),
+            age: 0,
+        }
+    }
+    fn reset(&mut self) {
+        self.name = "Your Name".to_string();
+        self.age = 0;
+    }
+    fn update(&mut self, name: String, age: u8) {
+        self.name = name;
+        self.age = age;
+    }
+}
+#[derive(Debug, Clone)]
+struct Person {
+    name: String,
+    age: u8,
 }
