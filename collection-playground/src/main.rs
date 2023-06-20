@@ -1,25 +1,38 @@
 #![deny(clippy::all)]
 
-use std::collections::VecDeque;
-
 fn main() {
-    let arr: [i32; 3] = [1, 2, 3];
+    let mut vec_collection: VecCollection = VecCollection::new();
+    println!("{:?}", vec_collection); // VecCollection { list: [] }
 
-    let double_arr: Vec<i32> = arr.iter().map(|&x| x * 2).collect::<Vec<i32>>();
-    println!("{:?}", double_arr); // [2, 4, 6]
+    vec_collection.add(10);
+    println!("{:?}", vec_collection); // VecCollection { list: [10] }
 
-    let double_arr: Vec<i32> = arr.iter().map(|&x| x * 2).collect::<Vec<_>>(); //? collect() only cares about what you’re collecting into, you can still use a partial type hint, _,
-    println!("{:?}", double_arr); // [2, 4, 6]
+    let iter: std::ops::Range<i32> = 0..5;
+    let c: VecCollection = VecCollection::from_iter(iter);
+    println!("{:?}", c); //? VecCollection { list: [0, 1, 2, 3, 4] }
+}
 
-    let double_arr: VecDeque<i32> = arr.iter().map(|&x| x * 2).collect::<VecDeque<i32>>();
-    println!("{:?}", double_arr); // [2, 4, 6]
+#[derive(Clone, Debug)]
+struct VecCollection {
+    list: Vec<i32>,
+}
 
-    let arr: [char; 5] = ['a', 'b', 'c', 'd', 'e'];
+impl VecCollection {
+    fn new() -> Self {
+        VecCollection { list: Vec::new() }
+    }
+    fn add(&mut self, element: i32) {
+        self.list.push(element);
+    }
+}
 
-    let chars: String = arr
-        .iter()
-        .map(|&x| x as u8)
-        .map(|x: u8| x as char)
-        .collect::<String>();
-    println!("{:?}", chars); //? "abcde"
+impl FromIterator<i32> for VecCollection {
+    // from_iter come from std::iter::FromIterator
+    fn from_iter<T: IntoIterator<Item = i32>>(iter: T) -> Self {
+        let mut c: VecCollection = VecCollection::new();
+        for i in iter {
+            c.add(i);
+        }
+        c
+    }
 }
