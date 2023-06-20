@@ -1,19 +1,33 @@
 #![deny(clippy::all)]
 
-use rand::prelude::*;
+use std::collections::VecDeque;
 
 fn main() {
-    let mut random_number = random::<u32>();
-    println!("{:?}", random_number);
+    let mut _vector: Vec<i32> = Vec::new();
+    for i in 0..5 {
+        _vector.push(i);
+        println!("Vector: {:?}", _vector);
+    }
+    for _i in (0..5).rev() {
+        _vector.pop();
+        println!("Vector: {:?}", _vector);
+    }
 
-    let mut rng: ThreadRng = rand::thread_rng();
-    random_number = rng.gen();
-    println!("{:?}", random_number);
-    random_number = rng.gen();
-    println!("{:?}", random_number);
-
-    let mut numbers: Vec<i32> = (0..100).collect();
-    println!("{:?}", numbers);
-    numbers.shuffle(&mut rng);
-    println!("{:?}", numbers);
+    let mut _vec_deque: VecDeque<i32> = VecDeque::new();
+    for i in 0..5 {
+        _vec_deque.push_front(i);
+        println!("VecDeque: {:?}", _vec_deque);
+    }
+    for i in 5..10 {
+        _vec_deque.push_back(i);
+        println!("VecDeque: {:?}", _vec_deque);
+    }
+    for _ in 0..5 {
+        _vec_deque.pop_front();
+        println!("VecDeque: {:?}", _vec_deque);
+    }
+    for _ in (5..10).rev() {
+        _vec_deque.pop_back();
+        println!("VecDeque: {:?}", _vec_deque);
+    }
 }
