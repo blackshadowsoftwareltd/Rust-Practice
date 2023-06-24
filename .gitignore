@@ -25,3 +25,5 @@ crates-package-modules-playground/workspace/target/
 file-playground/target/
 rust-playground/target/
 struct-playground/target/
+exercises_playground/target/
+exercises_playground/Cargo.lock
