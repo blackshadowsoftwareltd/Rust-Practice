@@ -1,36 +1,21 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let home = IPAddress::V4(IPV4::Address("25.43.64.12".to_string()));
-    let loopback = IPAddress::V6(IPV6::Address("25.32.24.24".to_string()));
-    println!("Home: {:?}", home);
-    println!("Loopback: {:?}", loopback);
-
-    println!("Home: {}", home.get_ip());
-    println!("Loopback: {}", loopback.get_ip());
-}
-impl IPAddress {
-    fn get_ip(&self) -> String {
-        match self {
-            IPAddress::V4(ipv4) => match ipv4 {
-                IPV4::Address(ip) => ip.clone(),
-            },
-            IPAddress::V6(ipv6) => match ipv6 {
-                IPV6::Address(ip) => ip.clone(),
-            },
-        }
+    match plus_one(Some(5)) {
+        Some(v) => print!("plus with 5 : {:?}", v),
+        None => println!("None"),
+    };
+    println!("");
+    match plus_one(None) {
+        Some(_) => println!("Some Data"),
+        None => println!("None"),
     }
+    // println!("plus with None : {:?}", ;
 }
-#[derive(Debug)]
-enum IPAddress {
-    V4(IPV4),
-    V6(IPV6),
-}
-#[derive(Debug)]
-enum IPV4 {
-    Address(String),
-}
-#[derive(Debug)]
-enum IPV6 {
-    Address(String),
+
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        Some(v) => Some(v + 1),
+        None => None,
+    }
 }
