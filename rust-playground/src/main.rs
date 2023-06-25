@@ -1,12 +1,8 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let home = IPAddress::V4(IPV4 {
-        address: "45.68.78.34".to_string(),
-    });
-    let loopback = IPAddress::V6(IPV6 {
-        address: "25.32.24.24".to_string(),
-    });
+    let home = IPAddress::V4(IPV4::Address("25.43.64.12".to_string()));
+    let loopback = IPAddress::V6(IPV6::Address("25.32.24.24".to_string()));
     println!("Home: {:?}", home);
     println!("Loopback: {:?}", loopback);
 
@@ -16,8 +12,12 @@ fn main() {
 impl IPAddress {
     fn get_ip(&self) -> String {
         match self {
-            IPAddress::V4(ipv4) => ipv4.address.clone(),
-            IPAddress::V6(ipv6) => ipv6.address.clone(),
+            IPAddress::V4(ipv4) => match ipv4 {
+                IPV4::Address(ip) => ip.clone(),
+            },
+            IPAddress::V6(ipv6) => match ipv6 {
+                IPV6::Address(ip) => ip.clone(),
+            },
         }
     }
 }
@@ -27,10 +27,10 @@ enum IPAddress {
     V6(IPV6),
 }
 #[derive(Debug)]
-struct IPV4 {
-    address: String,
+enum IPV4 {
+    Address(String),
 }
 #[derive(Debug)]
-struct IPV6 {
-    address: String,
+enum IPV6 {
+    Address(String),
 }
