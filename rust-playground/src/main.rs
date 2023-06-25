@@ -1,15 +1,13 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let x: u8 = 5;
-    match x {
-        0 => println!("Zero"),
-        1 | 2 => println!("One or Two"),
-        3..=5 => println!("3 to 5"),
-        _ => println!("Default case"),
-    }
-
-    let numbers = (0, 1, 2, 3, 4, 5);
-    let (first, .., last) = numbers;
-    println!("First ? {} & Last ? {}", first, last);
+    let home = IPAddress::V4("12.131.12.13".to_string());
+    let loopback = IPAddress::V6("25.32.24.24".to_string());
+    println!("Home: {:?}", home);
+    println!("Loopback: {:?}", loopback);
+}
+#[derive(Debug)]
+enum IPAddress {
+    V4(String),
+    V6(String),
 }
