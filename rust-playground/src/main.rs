@@ -1,17 +1,11 @@
 #![deny(clippy::all)]
 
 fn main() {
-    color_match(Some(0));
-    color_match(Some(1));
-    color_match(Some(2));
-}
-
-fn color_match(color: Option<i32>) {
-    if let Some(0) = color {
-        println!("The color is Red!");
-    } else if let Some(1) = color {
-        println!("The color is Green!");
-    } else if let Some(2) = color {
-        println!("The color is Blue!");
+    let v = (2, -2);
+    match v {
+        (x, y) if x == y => println!("These are twins"),
+        (x, y) if x + y == 0 => println!("Antimatter, kaboom!"),
+        (x, _) if x % 2 == 1 => println!("The first one is odd"),
+        _ => println!("No correlation..."),
     }
 }
