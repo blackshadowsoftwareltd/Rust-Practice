@@ -1,20 +1,14 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let mut list: Vec<ListType> = Vec::new();
-    for i in 0..10 {
-        if i % 2 == 0 {
-            list.push(ListType::Left(i))
-        } else {
-            list.push(ListType::Right(i as f32))
-        }
-    }
-    for i in list.iter() {
-        println!("{:?}", i);
-    }
+    inspect(&[1, 2, 3, 4]); //? every thing is here : 1 2 3 4
+    inspect(&[1, 2, 3, 4, 5]); //? 1, every thing is ignore
 }
-#[derive(Debug)]
-enum ListType {
-    Left(i32),
-    Right(f32),
+
+fn inspect(list: &[i32]) {
+    match list {
+        [1, x, y, z] => println!("every thing is here : 1 {x} {y} {z}"),
+        [1, ..] => println!("1, every thing is ignore"),
+        _ => println!("..."),
+    };
 }
