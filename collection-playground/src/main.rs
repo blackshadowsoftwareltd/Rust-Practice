@@ -1,21 +1,20 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let mut list = vec![1, 2, 3, 4];
-    let six: Option<&u8> = list.get(5);
-    match six {
-        Some(v) => println!("{:?}", v),
-        None => println!("No element found in index 5"),
+    let mut list: Vec<ListType> = Vec::new();
+    for i in 0..10 {
+        if i % 2 == 0 {
+            list.push(ListType::Left(i))
+        } else {
+            list.push(ListType::Right(i as f32))
+        }
     }
-    list.append(&mut vec![5, 6, 7]);
-
-    let six: Option<&u8> = list.get(5);
-    match six {
-        Some(v) => println!("{:?}", v),
-        None => println!("No element found in index 5"),
+    for i in list.iter() {
+        println!("{:?}", i);
     }
-    for v in &mut list {
-        *v += 1;
-    }
-    println!("{:?}", list);
+}
+#[derive(Debug)]
+enum ListType {
+    Left(i32),
+    Right(f32),
 }
