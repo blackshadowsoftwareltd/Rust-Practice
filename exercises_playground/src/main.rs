@@ -1,22 +1,17 @@
 #![deny(clippy::all)]
 
-mod book;
-mod library;
-use book::Book;
-use library::Library;
+mod user;
+use user::User;
+
 fn main() {
-    let mut library = Library::new();
-    println!("The library is empty: {}", library.is_empty());
-    library.add_book(Book::new("Lord of the Rings", 1954));
-    library.add_book(Book::new("Alice's Adventures in Wonderland", 1865));
-    println!("The library is no longer empty: {}", library.is_empty());
-    library.print_books();
-
-    match library.oldest_book() {
-        Some(book) => println!("The oldest book is {}", book.name),
-        None => println!("The library is empty!"),
-    }
-    println!("The library has {} books", library.len());
-    library.print_books();
+    let mut bob = User::new(String::from("Bob"), 32, 155.2);
+    bob.set_name("Bob New Name".to_string());
+    bob.set_age(23);
+    bob.set_weight(78.0);
+    println!(
+        "I'm {}, I am {} years old and my weight is {}",
+        bob.name(),
+        bob.age(),
+        bob.weight()
+    );
 }
-
