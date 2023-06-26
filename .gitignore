@@ -27,3 +27,5 @@ rust-playground/target/
 struct-playground/target/
 exercises_playground/target/
 exercises_playground/Cargo.lock
+dir_watch_grpc/target/
+dir_watch_grpc/Cargo.lock
