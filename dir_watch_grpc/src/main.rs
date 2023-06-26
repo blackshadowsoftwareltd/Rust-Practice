@@ -1,6 +1,8 @@
 #![deny(clippy::all)]
 
 pub mod engine;
+use engine::watcher::watch::watch_dir;
+
 fn main() {
-    println!("Hello, world!");
+    watch_dir("path".to_string());
 }
