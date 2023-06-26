@@ -1,14 +1,14 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let mut x = 10;
-    x = if x % 2 == 0 { x / 2 } else { x / 3 + 1 };
-    println!("{}", x);
+    let v = vec![10, 20, 30];
 
-    let arg = std::env::args().next();
-    if let Some(v) = arg {
-        println!("v is : {}", v) // ? v is : target/debug/rust-playground
-    } else {
-        println!("Missing name?");
+    for x in v {
+        println!("x: {x}");
+    }
+
+    // ? step_by :: Creates an iterator starting at the same point, but stepping by the given amount at each iteration.
+    for i in (1..100).step_by(10) {
+        println!("i : {}", i)
     }
 }
