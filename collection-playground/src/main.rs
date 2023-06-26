@@ -1,5 +1,21 @@
 #![deny(clippy::all)]
 
-use std::collections::VecDeque;
+fn main() {
+    let mut list = vec![1, 2, 3, 4];
+    let six: Option<&u8> = list.get(5);
+    match six {
+        Some(v) => println!("{:?}", v),
+        None => println!("No element found in index 5"),
+    }
+    list.append(&mut vec![5, 6, 7]);
 
-fn main() {}
+    let six: Option<&u8> = list.get(5);
+    match six {
+        Some(v) => println!("{:?}", v),
+        None => println!("No element found in index 5"),
+    }
+    for v in &mut list {
+        *v += 1;
+    }
+    println!("{:?}", list);
+}
