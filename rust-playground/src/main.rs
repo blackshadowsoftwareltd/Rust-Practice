@@ -1,15 +1,17 @@
 #![deny(clippy::all)]
 
-use tokio::time::{sleep, Duration};
+fn main() {
+    let mut dummy_text = String::new();
+    dummy_text = String::from("World");
+    dummy_text.push_str("Hello");
+    println!("{:?}", dummy_text);
 
-#[tokio::main]
-async fn main() {
-    let first = apis("Data 1".to_string()).await;
-    println!("{:?}", first);
-    let second = apis("Data 2".to_string()).await;
-    println!("{:?}", second);
-}
-async fn apis(data: String) -> String {
-    sleep(Duration::from_secs(2)).await;
-    data
+    let mut text = String::with_capacity(dummy_text.len());
+    println!("{:?}", text.len());
+
+    println!("{:?}", dummy_text);
+
+    text = dummy_text;
+
+    println!("{:?}", text);
 }
