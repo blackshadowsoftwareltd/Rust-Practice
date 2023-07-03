@@ -1,28 +1,15 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let mut vec1: Vec<i32> = Vec::new();
-    vec1.push(10);
+    let mut vec1 = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    println!("vec : {:?}", vec1);
 
-    let mut vec2 = Vec::with_capacity(vec1.len());
-    vec2.push(20);
-    println!("capacity {:?}", vec2.capacity());
+    vec1.retain(|x| x % 2 == 0);
+    println!("vec : {:?}", vec1); // ? vec : [2, 4, 6, 8, 10]
 
-    vec2.extend(vec1.clone().iter());
-    println!(
-        "vec : {:?}, capacity : {:?}, len : {:?}",
-        vec2,
-        vec2.capacity(),
-        vec2.len()
-    ); //? vec : [20, 10], capacity : 4, len : 2
+    vec1 = vec![1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10];
+    println!("vec : {:?}", vec1); // ? vec : [1, 2, 2, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10]
 
-    vec1 = vec2.clone();
-    vec1.push(50);
-    vec2.extend(vec1.iter());
-    println!(
-        "vec : {:?}, capacity : {:?}, len : {:?}",
-        vec2,
-        vec2.capacity(),
-        vec2.len()
-    ); //? vec : [20, 10, 20, 10, 50], capacity : 8, len : 5
+    vec1.dedup(); //? Remove consecutive duplicates.
+    println!("vec : {:?}", vec1); // ? vec : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 }
