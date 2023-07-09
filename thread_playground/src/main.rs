@@ -18,9 +18,20 @@ async fn main() {
 }
 
 async fn do_something(list: &[String]) {
-    list.par_iter().for_each(|x| print_data(x));
+    rayon::scope(|s| {
+        list.par_iter().for_each(|item| {
+            s.spawn(|_| {
+                tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                    .unwrap()
+                    .block_on(print_data(item));
+            });
+        });
+    });
 }
-fn print_data(v: &String) {
+
+async fn print_data(v: &String) {
     sleep(Duration::from_secs(2));
     println!("{:?}", v)
 }
