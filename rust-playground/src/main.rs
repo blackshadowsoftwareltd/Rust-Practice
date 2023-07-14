@@ -1,51 +1,65 @@
 #![deny(clippy::all)]
+
+use nu_ansi_term::AnsiByteStrings;
+use nu_ansi_term::Color::Green;
+use nu_ansi_term::{Color::Blue, Color::Cyan, Color::Fixed, Color::Red, Color::Yellow, Style};
 fn main() {
-    let mut race = Race::new("Monaco Grand Prix");
-    race.add_lap(70);
-    race.add_lap(68);
-    race.print_laps();
-    race.add_lap(71);
-    race.print_laps();
-    race.finish();
-    // race.add_lap(42); // ? error: cannot borrow `race` as mutable because it is also borrowed as immutable
+    println!("This is in red: {}", Red.paint("a red string"));
+
+    println!(
+        "How about some {} and {}?",
+        Style::new().bold().paint("bold"),
+        Style::new().underline().paint("underline")
+    );
+
+    println!(
+        "Demonstrating {} and {}!",
+        Blue.bold().paint("blue bold"),
+        Yellow.underline().paint("yellow underline")
+    );
+
+    println!("Yellow on blue: {}", Yellow.on(Blue).paint("wow!"));
+
+    println!(
+        "Yellow on blue: {}",
+        Style::new().on(Blue).fg(Yellow).paint("yow!")
+    );
+
+    println!(
+        "Also yellow on blue: {}",
+        Cyan.on(Blue).fg(Yellow).paint("zow!")
+    );
+
+    println!("Text {}", Red.normal().paint("yet another red string"));
+
+    println!(
+        "Text {}",
+        Style::default().paint("a completely regular string")
+    );
+
+    println!(
+        "\x1b[33mHow about some {} \x1b[33mand {}?\x1b[0m",
+        Style::new().reset_before_style().bold().paint("bold"),
+        Style::new()
+            .reset_before_style()
+            .underline()
+            .paint("underline")
+    );
+
+    println!("Text {}", Fixed(134).paint("A sort of light purple"));
+
+    println!(
+        "Text {}",
+        Fixed(221).on(Fixed(124)).paint("Mustard in the ketchup")
+    );
+
+    println!(
+        "Text {:?}",
+        AnsiByteStrings(&[
+            Green.paint("user data 1\n".as_bytes()),
+            Green.bold().paint("user data 2\n".as_bytes()),
+        ])
+        .write_to(&mut std::io::stdout())
+        .unwrap()
+    );
 }
-
-#[derive(Debug)]
-struct Race {
-    name: String,
-    laps: Vec<i32>,
-}
-
-impl Race {
-    fn new(name: &str) -> Race {
-        // No receiver, a static method
-        Race {
-            name: String::from(name),
-            laps: Vec::new(),
-        }
-    }
-
-    fn add_lap(&mut self, lap: i32) {
-        // Exclusive borrowed read-write access to self
-        self.laps.push(lap);
-    }
-
-    fn print_laps(&self) {
-        // Shared and read-only borrowed access to self
-        println!("Recorded {} laps for {}:", self.laps.len(), self.name);
-        for (idx, lap) in self.laps.iter().enumerate() {
-            println!("Lap {idx}: {lap} sec");
-        }
-    }
-
-    fn finish(self) {
-        // Exclusive ownership of self
-        let total = self.laps.iter().sum::<i32>();
-        println!("Race {} is finished, total lap time: {}", self.name, total);
-    }
-}
-
-/*
-iter() returns an iterator that allows you to iterate over the collection by reference. This means that you can only access the elements of the collection through references.
-into_iter() returns an iterator that allows you to iterate over the collection by value. This means that you can take ownership of the elements of the collection and move them into other places.
-*/
