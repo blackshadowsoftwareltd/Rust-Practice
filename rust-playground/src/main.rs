@@ -1,21 +1,35 @@
 #![deny(clippy::all)]
 
-use std::fmt::Debug;
 fn main() {
-    let p = Point::new(5, 10.0);
-    p.print_data();
+    let pets: Vec<Box<dyn Pet>> = vec![
+        Box::new(Cat),
+        Box::new(Dog {
+            name: "Fido".to_string(),
+        }),
+    ];
+
+    for pet in pets {
+        println!("Hay {:?}", pet.name())
+    }
 }
-#[derive(Debug)]
-struct Point<T> {
-    x: T,
-    y: f32,
+trait Pet {
+    fn name(&self) -> String;
 }
 
-impl<T: Debug> Point<T> {
-    fn new(x: T, y: f32) -> Self {
-        Self { x, y }
+struct Dog {
+    name: String,
+}
+
+struct Cat;
+
+impl Pet for Dog {
+    fn name(&self) -> String {
+        self.name.clone()
     }
-    fn print_data(&self) {
-        println!("x : {:?}, y : {:?}", self.x, self.y);
+}
+
+impl Pet for Cat {
+    fn name(&self) -> String {
+        String::from("Mioaw")
     }
 }
