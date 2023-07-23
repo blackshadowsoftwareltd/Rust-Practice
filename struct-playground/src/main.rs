@@ -1,16 +1,20 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let _foo = Foo { x: (10, 20), y: 30 };
-
-    match _foo {
-        Foo { x: (10, b), y } => println!("x : (10, {}), {}", b, y),
-        // Foo { y, x: i } => println!("y : {}, x : {:?}", y, i),
-        Foo { y, .. } => println!("Ingnored x. y : {}", y),
-    }
+    let p1 = Player::default();
+    let p2 = p1.clone();
+    println!(
+        "IS {:?}\nEqual to {:?}?The answer is {:?}",
+        &p1,
+        &p2,
+        if p1 == p2 { "Yes" } else { "No" }
+    );
 }
 
-struct Foo {
-    x: (i32, i32),
-    y: i32,
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+
+struct Player {
+    name: String,
+    strength: u8,
+    hit_points: u8,
 }
