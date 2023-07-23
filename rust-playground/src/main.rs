@@ -1,51 +1,35 @@
 #![deny(clippy::all)]
+
 fn main() {
-    let mut race = Race::new("Monaco Grand Prix");
-    race.add_lap(70);
-    race.add_lap(68);
-    race.print_laps();
-    race.add_lap(71);
-    race.print_laps();
-    race.finish();
-    // race.add_lap(42); // ? error: cannot borrow `race` as mutable because it is also borrowed as immutable
+    let pets: Vec<Box<dyn Pet>> = vec![
+        Box::new(Cat),
+        Box::new(Dog {
+            name: "Fido".to_string(),
+        }),
+    ];
+
+    for pet in pets {
+        println!("Hay {:?}", pet.name())
+    }
+}
+trait Pet {
+    fn name(&self) -> String;
 }
 
-#[derive(Debug)]
-struct Race {
+struct Dog {
     name: String,
-    laps: Vec<i32>,
 }
 
-impl Race {
-    fn new(name: &str) -> Race {
-        // No receiver, a static method
-        Race {
-            name: String::from(name),
-            laps: Vec::new(),
-        }
-    }
+struct Cat;
 
-    fn add_lap(&mut self, lap: i32) {
-        // Exclusive borrowed read-write access to self
-        self.laps.push(lap);
-    }
-
-    fn print_laps(&self) {
-        // Shared and read-only borrowed access to self
-        println!("Recorded {} laps for {}:", self.laps.len(), self.name);
-        for (idx, lap) in self.laps.iter().enumerate() {
-            println!("Lap {idx}: {lap} sec");
-        }
-    }
-
-    fn finish(self) {
-        // Exclusive ownership of self
-        let total = self.laps.iter().sum::<i32>();
-        println!("Race {} is finished, total lap time: {}", self.name, total);
+impl Pet for Dog {
+    fn name(&self) -> String {
+        self.name.clone()
     }
 }
 
-/*
-iter() returns an iterator that allows you to iterate over the collection by reference. This means that you can only access the elements of the collection through references.
-into_iter() returns an iterator that allows you to iterate over the collection by value. This means that you can take ownership of the elements of the collection and move them into other places.
-*/
+impl Pet for Cat {
+    fn name(&self) -> String {
+        String::from("Mioaw")
+    }
+}
