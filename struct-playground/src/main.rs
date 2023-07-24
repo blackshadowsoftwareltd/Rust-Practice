@@ -1,35 +1,20 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let a = Centimeter(10);
-    let b = Centimeter(20);
-    println!("{:?} == {:?} ? {:?}", a, b, a.equal(&b));
-    println!("{:?} != {:?} ? {:?}", a, b, a.not_equal(&b));
+    let foo = "Foo".to_string();
+    let pair = duplicate(foo);
+    println!("{pair:?}");
+
+    let many = add_42_millions(48_i8);
+    println!("{many}");
+    let many_more = add_42_millions(10_000_000);
+    println!("{many_more}");
 }
 
-trait Equals {
-    fn equal(&self, other: &Self) -> bool;
+fn duplicate<T: Clone>(a: T) -> (T, T) {
+    (a.clone(), a.clone())
 }
 
-trait NotEquals {
-    fn not_equal(&self, other: &Self) -> bool;
-}
-
-#[derive(Debug)]
-struct Centimeter(i16);
-
-impl Equals for Centimeter {
-    fn equal(&self, other: &Self) -> bool {
-        self.0 == other.0
-    }
-}
-// ? for use Equals with NotEquals trait
-// ? access another property of trait from a trait
-impl<T> NotEquals for T
-where
-    T: Equals,
-{
-    fn not_equal(&self, other: &Self) -> bool {
-        !self.equal(other)
-    }
+fn add_42_millions(x: impl Into<i32>) -> i32 {
+    x.into() + 42_000_000
 }
