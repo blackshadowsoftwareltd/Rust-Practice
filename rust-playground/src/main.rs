@@ -1,35 +1,12 @@
 #![deny(clippy::all)]
 
+use std::sync::OnceLock;
+
 fn main() {
-    let pets: Vec<Box<dyn Pet>> = vec![
-        Box::new(Cat),
-        Box::new(Dog {
-            name: "Fido".to_string(),
-        }),
-    ];
+    let _: &String = CELL.get_or_init(|| "Hello, World!".to_string());
 
-    for pet in pets {
-        println!("Hay {:?}", pet.name())
-    }
-}
-trait Pet {
-    fn name(&self) -> String;
+    let value: Option<&String> = CELL.get();
+    println!("{:?}", value);
 }
 
-struct Dog {
-    name: String,
-}
-
-struct Cat;
-
-impl Pet for Dog {
-    fn name(&self) -> String {
-        self.name.clone()
-    }
-}
-
-impl Pet for Cat {
-    fn name(&self) -> String {
-        String::from("Mioaw")
-    }
-}
+pub static CELL: OnceLock<String> = OnceLock::new();
