@@ -1,12 +1,12 @@
 #![deny(clippy::all)]
-
-use std::sync::OnceLock;
+use std::fmt::Display;
 
 fn main() {
-    let _: &String = CELL.get_or_init(|| "Hello, World!".to_string());
-
-    let value: Option<&String> = CELL.get();
-    println!("{:?}", value);
+    let name = "Alice";
+    let name = get_name(name);
+    println!("{}", name);
 }
 
-pub static CELL: OnceLock<String> = OnceLock::new();
+fn get_name(name: impl Display) -> impl Display {
+    format!("{} is a position", name)
+}
