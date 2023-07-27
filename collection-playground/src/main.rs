@@ -1,23 +1,10 @@
 #![deny(clippy::all)]
 
 fn main() {
-    let fib = Fibonacci { curr: 0, next: 1 };
-    for (i, n) in fib.enumerate().take(5) {
-        println!("{}: {}", i, n);
-    }
-}
-
-struct Fibonacci {
-    curr: u32,
-    next: u32,
-}
-
-impl Iterator for Fibonacci {
-    type Item = u32;
-    fn next(&mut self) -> Option<Self::Item> {
-        let new_next = self.curr + self.next;
-        self.curr = self.next;
-        self.next = new_next;
-        Some(self.curr)
-    }
+    let primes = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
+    let prime_squares = primes
+        .into_iter()
+        .map(|prime| prime * prime)
+        .collect::<Vec<_>>();
+    println!("{:?}", prime_squares);
 }
