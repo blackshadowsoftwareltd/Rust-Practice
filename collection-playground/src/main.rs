@@ -1,14 +1,23 @@
 #![deny(clippy::all)]
 
 fn main() {
-    inspect(&[1, 2, 3, 4]); //? every thing is here : 1 2 3 4
-    inspect(&[1, 2, 3, 4, 5]); //? 1, every thing is ignore
+    let fib = Fibonacci { curr: 0, next: 1 };
+    for (i, n) in fib.enumerate().take(5) {
+        println!("{}: {}", i, n);
+    }
 }
 
-fn inspect(list: &[i32]) {
-    match list {
-        [1, x, y, z] => println!("every thing is here : 1 {x} {y} {z}"),
-        [1, ..] => println!("1, every thing is ignore"),
-        _ => println!("..."),
-    };
+struct Fibonacci {
+    curr: u32,
+    next: u32,
+}
+
+impl Iterator for Fibonacci {
+    type Item = u32;
+    fn next(&mut self) -> Option<Self::Item> {
+        let new_next = self.curr + self.next;
+        self.curr = self.next;
+        self.next = new_next;
+        Some(self.curr)
+    }
 }
