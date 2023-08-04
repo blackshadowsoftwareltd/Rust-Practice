@@ -1,33 +1,27 @@
 #![deny(clippy::all)]
 
-//  Ternary Operator
+use std::ops::Add;
+
 fn main() {
-    let defauld_struct = Derived::default();
-    println!("default_struct : {:?}", defauld_struct);
-
-    let almost_default_struct = Derived {
-        x: 0,
-        y: "Y is set".into(),
-        ..Default::default()
-    };
-    println!("almost_default_struct : {:?}", almost_default_struct);
-
-    let nothing: Option<Derived> = None;
-    println!("nothing : {:#?}", nothing);
+    let p1 = Point { x: 10, y: 20 };
+    let p2 = Point { x: 100, y: 200 };
+    let p3 = p1.add(p2);
+    println!("Points :: {:?} +{:?} +{:?}", p1, p2, p3);
 }
 
-#[derive(Debug)]
-struct Implemented(String);
-
-#[derive(Debug, Default)]
-struct Derived {
-    x: u8,
-    y: String,
-    z: Implemented,
+#[derive(Debug, Copy, Clone)]
+struct Point {
+    x: i32,
+    y: i32,
 }
 
-impl Default for Implemented {
-    fn default() -> Self {
-        Self("default".into())
+impl std::ops::Add for Point {
+    type Output = Self;
+
+    fn add(self, other: Self) -> Self {
+        Self {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
     }
 }
