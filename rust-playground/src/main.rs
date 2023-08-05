@@ -3,42 +3,48 @@
 use std::mem;
 
 fn main() {
-    let color = String::from("green");
+    let greeting = "hello";
+    let mut farewell = "goodbye".to_owned();
 
-    let print = || println!("`Color : {:?}`", color);
-    // let c = color; //! cannot move out of `color` because it is borrowed
-    // ! we can get access after invocking print() closure.
-    print();
-    let _re_borrow = &color; // ? we can get the reference of the string if we use print() bellow again
-    print();
-    let _color_moved = color;
-
-    //? Mutable
-    let mut count = 0;
-    let mut inc = || {
-        count += 1;
-        println!("count : {:?}", count);
+    let diary = || {
+        println!("I said {}", greeting);
+        farewell.push_str("!!!");
+        println!("Then I screamed {}.", farewell);
+        println!("Now I can sleep. zzzzz");
+        mem::drop(farewell);
     };
-    inc();
-    // let _re_borrow = &count; // ! cannot borrow `count` as immutable because it is also borrowed as mutable
-    inc();
-    let _count_re_borrow = &mut count;
 
-    //? A non-copy type.
-    let movable = Box::new(5);
-    let consume = || {
-        println!("movable : {:?}", movable);
-        mem::drop(movable);
-    };
-    consume();
-    // consume(); // ! movable variable is droped after invocking one time.
+    // ---------------------------------------
+    apply(diary);
 
-    // ? `Vec` has non-copy semantics.
-    let haystack = vec![1, 2, 3];
+    let double = |x| 2 * x;
+    let applied_to_3 = apply_to_3(double);
+    println!("3 doubled : {}", applied_to_3);
 
-    let contains = move |needle| haystack.contains(needle);
-    println!("contains(&1) {}", contains(&1));
-    println!("contains(&4) {}", contains(&4));
+    // ---------------------------------------
+    let mut x = 4;
+    let add_to_2 = || x += 2;
+    make_twice(add_to_2);
+    println!("twice : {}", x);
+}
 
-    // println!("There're {} elements in vec", haystack.len()); // !  haystack is moved
+fn apply<F>(func: F)
+where
+    F: FnOnce(),
+{
+    func();
+}
+
+fn apply_to_3<F>(func: F) -> i32
+where
+    F: Fn(i32) -> i32,
+{
+    func(3)
+}
+
+fn make_twice<F>(mut func: F)
+where
+    F: FnMut(),
+{
+    func();
 }
