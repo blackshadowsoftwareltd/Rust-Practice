@@ -1,17 +1,25 @@
 #![deny(clippy::all)]
 fn main() {
-    let closure = || println!("I'm a Closure!");
+    let fn_plain = create_fn();
+    let mut fn_mut = create_fn_mut();
+    let fn_once = create_fn_once();
 
-    call_me(closure);
-    call_me(functions);
+    fn_plain();
+    fn_mut();
+    fn_once();
 }
 
-// Define a function which takes a generic `F` argument
-fn call_me<F: Fn()>(f: F) {
-    f();
+fn create_fn() -> impl Fn() {
+    let text = "Fn".to_owned();
+    move || println!("This is a : {:?}", text)
 }
 
-// Define a wrapper function satisfying the `Fn` bound
-fn functions() {
-    println!("I'm a function")
+fn create_fn_mut() -> impl FnMut() {
+    let text = "Fn Mut".to_owned();
+    move || println!("This is a : {:?}", text)
+}
+
+fn create_fn_once() -> impl FnOnce() {
+    let text = "Fn Once".to_owned();
+    move || println!("This is a : {:?}", text)
 }
