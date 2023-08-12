@@ -1,14 +1,17 @@
 #![deny(clippy::all)]
 fn main() {
-    let x = 5;
-    let print = || println!("x : {:?}", x);
+    let closure = || println!("I'm a Closure!");
 
-    apply(print);
+    call_me(closure);
+    call_me(functions);
 }
 
-fn apply<F>(f: F)
-where
-    F: Fn(),
-{
+// Define a function which takes a generic `F` argument
+fn call_me<F: Fn()>(f: F) {
     f();
+}
+
+// Define a wrapper function satisfying the `Fn` bound
+fn functions() {
+    println!("I'm a function")
 }
