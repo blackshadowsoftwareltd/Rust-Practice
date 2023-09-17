@@ -1,26 +1,16 @@
 #![deny(clippy::all)]
-use std::fs::File;
-use std::io::ErrorKind;
+use std::path::PathBuf;
 
 fn main() {
-    let result = open_file();
-    if let Ok(_file) = result {
-        println!("File is exist")
-    } else if let Err(message) = result {
-        println!("!!! Error : {}", message);
-    }
+    let path = PathBuf::from("files/pxfuel.jpg");
+    let mb = file_size_in_mb(path).unwrap();
+    println!("mb : {:?}", mb);
 }
 
-fn open_file() -> Result<File, String> {
-    let open = File::open("file.jpeg");
-    match open {
-        Ok(file) => Ok(file),
-        Err(err) => match err.kind() {
-            ErrorKind::NotFound => Err("File Not Found.".to_string()),
-            ErrorKind::PermissionDenied => Err("Permission Denied.".to_string()),
-            ErrorKind::Unsupported => Err("Unsupported.".to_string()),
-            ErrorKind::Other => Err("Other".to_string()),
-            _ => Err("Unknown Error".to_string()),
-        },
+fn file_size_in_mb(path: PathBuf) -> Result<f64, String> {
+    if !path.exists() {
+        return Err("Error : File not Exist".to_string());
     }
+    let bytes = std::fs::metadata(path).unwrap().len();
+    Ok((bytes as f64 / 1024.0) / 1024.0)
 }
