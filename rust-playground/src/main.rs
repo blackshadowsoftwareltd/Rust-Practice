@@ -1,32 +1,25 @@
 #![deny(clippy::all)]
 
-use std::{
-    collections::HashSet,
-    sync::{Mutex, OnceLock},
-};
-pub static INFO: OnceLock<Mutex<HashSet<i32>>> = OnceLock::new();
+use std::{fs::File, io::Read};
+
+use anyhow::{bail, Context, Result};
 
 fn main() {
-    init();
-    let v = INFO.get().unwrap().lock().unwrap().clone();
-    println!("{:?}", v);
-
-    INFO.get().unwrap().lock().unwrap().insert(6);
-    let v = INFO.get().unwrap().lock().unwrap().clone();
-    println!("{:?}", v);
+    match read_data("src/main.rs") {
+        Ok(data) => println!("Data: {}", data),
+        Err(e) => println!("Error: {}", e),
+    }
 }
 
-fn init() {
-    let mut info = INFO
-        .get_or_init(|| {
-            let mut set = HashSet::new();
-            set.insert(1);
-            set.insert(2);
-            set.insert(3);
-            Mutex::new(set)
-        })
-        .lock()
-        .unwrap();
-    info.insert(4);
-    info.insert(5);
+fn read_data(path: &str) -> Result<String> {
+    let mut data = String::new();
+    File::open(path)
+        .with_context(|| format!("Failed to open file : {:?}", path.to_string()))?
+        .read_to_string(&mut data)
+        .context("Failed to read")?;
+
+    if data.is_empty() {
+        bail!("Data is Empty");
+    }
+    Ok(data)
 }
