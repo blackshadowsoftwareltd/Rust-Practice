@@ -1,25 +1,17 @@
 #![deny(clippy::all)]
 
-use std::{fs::File, io::Read};
-
-use anyhow::{bail, Context, Result};
-
 fn main() {
-    match read_data("src/main.rs") {
-        Ok(data) => println!("Data: {}", data),
-        Err(e) => println!("Error: {}", e),
-    }
+    let both_int = Point { x: 2, y: 4 };
+    let both_float = Point { x: 1.2, y: 3.4 };
+    let int_float = Point { x: 5, y: 10.8 };
+    println!(
+        "boath int : {:?}, both float : {:?}, int & float : {:?}",
+        both_int, both_float, int_float
+    );
 }
 
-fn read_data(path: &str) -> Result<String> {
-    let mut data = String::new();
-    File::open(path)
-        .with_context(|| format!("Failed to open file : {:?}", path.to_string()))?
-        .read_to_string(&mut data)
-        .context("Failed to read")?;
-
-    if data.is_empty() {
-        bail!("Data is Empty");
-    }
-    Ok(data)
+#[derive(Debug)]
+struct Point<X, Y> {
+    x: X,
+    y: Y,
 }
