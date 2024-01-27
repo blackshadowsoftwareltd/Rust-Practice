@@ -35,5 +35,19 @@ fn log_config() {
         )
         .build(Root::builder().appender("stdout").build(LevelFilter::Warn))
         .unwrap();
-    let _ = log4rs::init_config(config).unwrap();
+
+    if let Err(err) = log4rs::init_config(config) {
+        log::info!("Error initializing logrs: {}", err);
+    }
+
+    log::info!("Logrs initialized.");
+}
+
+#[test]
+fn log_test() {
+    log_config();
+    debug!("Mary has a little lamb");
+    error!("{}", "Its fleece was white as snow");
+    info!("{:?}", "And every where that Mary went");
+    warn!("{:#?}", "The lamb was sure to go");
 }
